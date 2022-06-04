@@ -32,9 +32,9 @@ namespace ft
 	{
 		private:
 			std::string			_name;
-			bool				(*_f)(void);
+			bool				(*_f)(int);
 		public:
-			test(bool (*f)(void), std::string name): _name(name), _f(f)
+			test(bool (*f)(int), std::string name): _name(name), _f(f)
 			{
 				if (_f())
 				{
