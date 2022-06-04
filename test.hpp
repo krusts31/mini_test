@@ -1,10 +1,11 @@
 #ifndef TEST_HPP
 # define TEST_HPP
 # include <unistd.h>
+# include <vector>
 # include <iostream>
 # include <string>
 # include <csignal>
-# include <cstdarg> 
+# include "vector.hpp"
 
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
@@ -34,12 +35,9 @@ namespace ft
 		private:
 			std::string			_name;
 		public:
-			test(std::string name, bool (*f)(...), ...): _name(name)
+			test(bool (*f)(std::vector, std::vector &std_vec, ft::vector &ft_vec), std::string name): _name(name)
 			{
-				va_list	list;
-
-				va_start(list, f);
-				if (f(list))
+				if (_f(std_vec, ft_vec))
 				{
 					g_passed++;
 					std::cout << GREEN <<  "[PASSED] " << BOLDWHITE << _name  << RESET << std::endl;
