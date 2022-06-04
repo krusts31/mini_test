@@ -34,9 +34,9 @@ namespace ft
 			std::string			_name;
 			bool				(*_f)(int);
 		public:
-			test(bool (*f)(int), std::string name): _name(name), _f(f)
+			test(bool (*f)(int), std::string name, int n): _name(name), _f(f)
 			{
-				if (_f())
+				if (_f(n))
 				{
 					g_passed++;
 					std::cout << GREEN <<  "[PASSED] " << BOLDWHITE << _name  << RESET << std::endl;
