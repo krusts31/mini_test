@@ -4,6 +4,7 @@
 # include <iostream>
 # include <string>
 # include <csignal>
+# include <cstdarg> 
 
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
@@ -32,11 +33,13 @@ namespace ft
 	{
 		private:
 			std::string			_name;
-			bool				(*_f)(int, int);
 		public:
-			test(bool (*f)(int, int), std::string name, int n, int iter): _name(name), _f(f)
+			test(std::string name, bool (*f)(...), ...): _name(name)
 			{
-				if (_f(n, iter))
+				va_list	list;
+
+				va_start(list, f);
+				if (f(list))
 				{
 					g_passed++;
 					std::cout << GREEN <<  "[PASSED] " << BOLDWHITE << _name  << RESET << std::endl;
