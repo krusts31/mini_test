@@ -31,22 +31,25 @@ namespace ft
 	size_t	g_passed = 0;
 	size_t	g_failed = 0;
 
+	template < class T >
 	class test
 	{
 		private:
-			std::string	name;
+			std::string			_name;
+			//typedef typename T	type;
+			bool				(*_f)(void);
 		public:
-			test(bool (*f)(void), std::string n): name(n)
+			test(bool (*f)(void), std::string name): _name(name), _f(f)
 			{
-				if (f())
+				if (_f())
 				{
 					g_passed++;
-					std::cout << GREEN << name << " PASSED" << RESET << std::endl;
+					std::cout << GREEN << _name << " PASSED" << RESET << std::endl;
 				}
 				else
 				{
 					g_failed++;
-					std::cout << RED << name << " FAILED" << RESET << std::endl;
+					std::cout << RED << _name << " FAILED" << RESET << std::endl;
 				}
 			}
 	};
