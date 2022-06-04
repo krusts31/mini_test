@@ -30,14 +30,15 @@ namespace ft
 	size_t	g_passed = 0;
 	size_t	g_failed = 0;
 
+	template <class T>
 	class test
 	{
 		private:
 			std::string			_name;
 		public:
-			test(std::string name, bool (*f)(std::vector &std_vec, ft::vector &ft_vec), std::vector &std_vec, ft::vector &ft_vec): _name(name)
+			explicit test(std::string name, bool (*f)(std::vector<T> *, ft::vector<T> *), ft::vector<T> *ft_vec, std::vector<T> *std_vec): _name(name)
 			{
-				if (_f(std_vec, ft_vec))
+				if (f(std_vec, ft_vec))
 				{
 					g_passed++;
 					std::cout << GREEN <<  "[PASSED] " << BOLDWHITE << _name  << RESET << std::endl;
@@ -52,3 +53,4 @@ namespace ft
 }
 
 #endif
+
