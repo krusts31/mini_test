@@ -5,9 +5,6 @@
 # include <string>
 # include <csignal>
 
-#define TEST(type)  \
-bool checkmin(type, __FUNCTION__, __LINE__);
-
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
 #define RED     "\033[31m"      /* Red */
@@ -42,12 +39,12 @@ namespace ft
 				if (_f())
 				{
 					g_passed++;
-					std::cout << GREEN << _name << " PASSED" << RESET << std::endl;
+					std::cout << GREEN <<  "[PASSED] " << BOLDWHITE << _name  << RESET << std::endl;
 				}
 				else
 				{
 					g_failed++;
-					std::cout << RED << _name << " FAILED" << RESET << std::endl;
+					std::cout << RED <<  "[FAILED]  << BOLDWHITE << _name  << RESET << std::endl;
 				}
 			}
 	};

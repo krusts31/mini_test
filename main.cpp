@@ -6,12 +6,14 @@
 /*   By: alkrusts <alkrusts@student.codam.n>          +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/02 18:13:07 by alkrusts      #+#    #+#                 */
-/*   Updated: 2022/06/04 11:42:41 by alkrusts      ########   odam.nl         */
+/*   Updated: 2022/06/04 12:53:11 by alkrusts      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.hpp"
 #include "test_func.hpp"
+
+#include <string>
 
 int main ()
 {
@@ -23,8 +25,10 @@ int main ()
 	(ft::test(is_default_construct_vec_int_empty, "ft::vector<int> ft_int_vec.empty()"));
 	(ft::test(is_fill_constructor_working, "ft::vector<int> fill construcor"));
 	*/
-	(ft::test(capacity_int_vec_size<int>, "ft::vector<int> ft_int_vec.capacity()"));
-	(ft::test(capacity_int_vec_size<char>, "ft::vector<char> ft_int_vec.capacity()"));
+	(ft::test(capacity_int_vec_size<int>, "ft::vector<int> ft_vec.capacity()"));
+	(ft::test(capacity_int_vec_size<char>, "ft::vector<char> ft_vec.capacity()"));
+	(ft::test(capacity_int_vec_size<float>, "ft::vector<float> ft_vec.capacity()"));
+	(ft::test(capacity_int_vec_size<std::string>, "ft::vector<std::string> ft_vec.capacity()"));
 	std::cout << GREEN << "PASSED: "<< ft::g_passed <<  RED << " FAILED: " << ft::g_failed << RESET << std::endl;
 	return (0);
 }

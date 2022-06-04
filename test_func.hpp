@@ -57,7 +57,7 @@ bool	is_fill_constructor_working(void)
 }
 
 template < class T >
-bool	capacity_int_vec_size(void)
+bool	capacity_int_vec_size()
 {
 	ft::vector<T>		ft_vec(4);
 	std::vector<T>		std_vec(4);
