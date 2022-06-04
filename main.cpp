@@ -6,7 +6,7 @@
 /*   By: alkrusts <alkrusts@student.codam.n>          +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/02 18:13:07 by alkrusts      #+#    #+#                 */
-/*   Updated: 2022/06/03 18:44:59 by alkrusts      ########   odam.nl         */
+/*   Updated: 2022/06/04 11:11:22 by alkrusts      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 int main ()
 {
-	signal(SIGUSR1, ft::signalPass);
-	signal(SIGUSR2, ft::signalFail);
-
 	(ft::test(test_3, "Default int constructor"));
 	(ft::test(is_default_construct_vec_char_empty, "ft::vector<char> ft_char_vec.empty()"));
 	(ft::test(is_default_construct_vec_float_empty, "ft::vector<float> ft_float_vec.empty()"));
