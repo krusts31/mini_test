@@ -56,10 +56,11 @@ bool	is_fill_constructor_working(void)
 	return (false);
 }
 
+template < class T >
 bool	capacity_int_vec_size(void)
 {
-	ft::vector<int>			ft_vec(4);
-	std::vector<int>		std_vec(4);
+	ft::vector<T>		ft_vec(4);
+	std::vector<T>		std_vec(4);
 
 	if (ft_vec.capacity() == std_vec.capacity())
 		return (true);

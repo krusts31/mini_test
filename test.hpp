@@ -31,12 +31,10 @@ namespace ft
 	size_t	g_passed = 0;
 	size_t	g_failed = 0;
 
-	template < class T >
 	class test
 	{
 		private:
 			std::string			_name;
-			//typedef typename T	type;
 			bool				(*_f)(void);
 		public:
 			test(bool (*f)(void), std::string name): _name(name), _f(f)
