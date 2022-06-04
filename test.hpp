@@ -44,7 +44,7 @@ namespace ft
 				else
 				{
 					g_failed++;
-					std::cout << RED <<  "[FAILED]  << BOLDWHITE << _name  << RESET << std::endl;
+					std::cout << RED <<  "[FAILED]"  << BOLDWHITE << _name  << RESET << std::endl;
 				}
 			}
 	};
