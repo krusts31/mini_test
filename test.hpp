@@ -35,7 +35,7 @@ namespace ft
 		private:
 			std::string			_name;
 		public:
-			test(bool (*f)(std::vector, std::vector &std_vec, ft::vector &ft_vec), std::string name): _name(name)
+			test(std::string name, bool (*f)(std::vector &std_vec, ft::vector &ft_vec), std::vector &std_vec, ft::vector &ft_vec): _name(name)
 			{
 				if (_f(std_vec, ft_vec))
 				{
