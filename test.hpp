@@ -41,12 +41,17 @@ namespace ft
 				if (f(std_vec, ft_vec))
 				{
 					g_passed++;
-					std::cout << GREEN << "[PASSED] " << BOLDMAGENT "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
+#ifndef LEAKS
+					std::cout << GREEN << "[PASSED] " << BOLDMAGENTA << "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
+#endif
 				}
+
 				else
 				{
 					g_failed++;
-					std::cout << RED <<  "[FAILED]" << BOLDMAGENT "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
+#ifndef LEAKS
+					std::cout << RED <<  "[FAILED]" << BOLDMAGENTA << "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
+#endif
 				}
 			}
 	};

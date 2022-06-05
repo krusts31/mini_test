@@ -5,3 +5,5 @@ all:
 	c++ $(TEST_MAIN) -Wall -Werror -Wextra -pedantic -std=c++98 -I . $(VECTOR) $(VECTOR_TESTS)
 clean:
 	rm a.out
+leaks:
+	c++ $(TEST_MAIN) -DLEAKS -Wall -Werror -Wextra -pedantic -std=c++98 -I . $(VECTOR) $(VECTOR_TESTS)
