@@ -71,6 +71,39 @@ namespace mini_test
 #endif
 				}
 			}
+			explicit mini_test(std::string name, bool (*f)(ft::vector<T> *, ft::vector<T> *), ft::vector<T> *ft_vec, ft::vector<T> *std_vec, int c): _name(name)
+			{
+				_typename = typeid(T).name();
+				if (_typename.compare("PPc") == 0)
+					_typename = "char **";
+				if (_typename.compare("Pc") == 0)
+					_typename = "char *";
+				if (_typename.compare("i") == 0)
+					_typename = "int";
+				if (_typename.compare("f") == 0)
+					_typename = "float";
+				if (_typename.compare("NSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE") == 0)
+					_typename = "std::string";
+				if (_typename.compare("c") == 0)
+					_typename = "char";
+				if (_typename.compare("d") == 0)
+					_typename = "double";
+				if (f(std_vec, ft_vec))
+				{
+					g_passed++;
+#ifndef LEAKS
+					std::cout << GREEN << "[PASSED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << _typename << BOLDMAGENTA << ">" << BOLDWHITE << "(" << ft_vec->size() << ")." << _name  << RESET << std::endl;
+#endif
+				}
+
+				else
+				{
+					g_failed++;
+#ifndef LEAKS
+					std::cout << RED <<  "[FAILED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << _typename << BOLDMAGENTA << ">" << BOLDWHITE << "(" << ft_vec->size() << ")." << _name  << RESET << std::endl;
+#endif
+				}
+			}
 	};
 }
 
