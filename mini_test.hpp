@@ -25,28 +25,37 @@
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
-namespace ft
+namespace mini_test
 {
+	enum constructor{def, fill, fill_2, range, copy};
 	size_t	g_passed = 0;
 	size_t	g_failed = 0;
 
 	template <class T>
-	class test
+	class mini_test
 	{
 		private:
 			std::string			_name;
+			std::string			_typename;
 		public:
-			explicit test(std::string name, bool (*f)(std::vector<T> *, ft::vector<T> *), ft::vector<T> *ft_vec, std::vector<T> *std_vec): _name(name)
+			explicit mini_test(std::string name, bool (*f)(std::vector<T> *, ft::vector<T> *), ft::vector<T> *ft_vec, std::vector<T> *std_vec, int c): _name(name)
 			{
 				if (f(std_vec, ft_vec))
 				{
+					_typename = typeid(T).name();
 					g_passed++;
-					std::cout << GREEN << "[PASSED] " << BOLDMAGENT "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
+					//so if we go in here we can get the artributes from the vector class
+#ifndef LEAKS
+					std::cout << GREEN << "[PASSED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
+#endif
 				}
+
 				else
 				{
 					g_failed++;
-					std::cout << RED <<  "[FAILED]" << BOLDMAGENT "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
+#ifndef LEAKS
+					std::cout << RED <<  "[FAILED] " <<  BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
+#endif
 				}
 			}
 	};
