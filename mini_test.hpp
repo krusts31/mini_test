@@ -48,7 +48,7 @@ namespace mini_test
 					g_passed++;
 					//ft::vector<T>(size).empty()
 #ifndef LEAKS
-					std::cout << GREEN << "[PASSED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << "(" << ft_vec->size() << ")." << _name  << RESET << std::endl;
+					std::cout << GREEN << "[PASSED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << _typename << BOLDMAGENTA << ">" << BOLDWHITE << "(" << ft_vec->size() << ")." << _name  << RESET << std::endl;
 #endif
 				}
 
@@ -56,7 +56,7 @@ namespace mini_test
 				{
 					g_failed++;
 #ifndef LEAKS
-					std::cout << RED <<  "[FAILED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << "(" << ft_vec->size() << ")." << _name  << RESET << std::endl;
+					std::cout << RED <<  "[FAILED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << _typename << BOLDMAGENTA << ">" << BOLDWHITE << "(" << ft_vec->size() << ")." << _name  << RESET << std::endl;
 #endif
 				}
 			}
