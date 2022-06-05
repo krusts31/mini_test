@@ -49,10 +49,12 @@ namespace mini_test
 					_typename = "int";
 				if (_typename.compare("f") == 0)
 					_typename = "float";
-				if (_typename.compare("St3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE") == 0)
+				if (_typename.compare("NSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE") == 0)
 					_typename = "std::string";
-				if (_typename.compare("char") == 0)
+				if (_typename.compare("c") == 0)
 					_typename = "char";
+				if (_typename.compare("d") == 0)
+					_typename = "double";
 				if (f(std_vec, ft_vec))
 				{
 					g_passed++;
