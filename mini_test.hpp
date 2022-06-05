@@ -44,14 +44,9 @@ namespace mini_test
 				{
 					_typename = typeid(T).name();
 					g_passed++;
-<<<<<<< HEAD:mini_test.hpp
 					//so if we go in here we can get the artributes from the vector class
 #ifndef LEAKS
 					std::cout << GREEN << "[PASSED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
-=======
-#ifndef LEAKS
-					std::cout << GREEN << "[PASSED] " << BOLDMAGENTA << "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
->>>>>>> ec0f604c27ddadf66bea8fbd141d3690d45b4365:test.hpp
 #endif
 				}
 
@@ -59,11 +54,7 @@ namespace mini_test
 				{
 					g_failed++;
 #ifndef LEAKS
-<<<<<<< HEAD:mini_test.hpp
 					std::cout << RED <<  "[FAILED] " <<  BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
-=======
-					std::cout << RED <<  "[FAILED]" << BOLDMAGENTA << "<" << MAGENTA << typeid(T).name() << BOLDMAGENTA << ">" << BOLDWHITE << _name  << RESET << std::endl;
->>>>>>> ec0f604c27ddadf66bea8fbd141d3690d45b4365:test.hpp
 #endif
 				}
 			}
@@ -71,4 +62,3 @@ namespace mini_test
 }
 
 #endif
-
