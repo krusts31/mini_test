@@ -43,6 +43,8 @@ namespace mini_test
 				if (f(std_vec, ft_vec))
 				{
 					_typename = typeid(T).name();
+					if (_typename.compare("PPc") == 0)
+						_typename = "char **"
 					g_passed++;
 					//ft::vector<T>(size).empty()
 #ifndef LEAKS
