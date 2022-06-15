@@ -35,12 +35,33 @@ namespace mini_test
 	class mini_test
 	{
 		private:
+			T					_arg_1;
+			T					_arg_2;
 			std::string			_name;
 			std::string			_typename;
+			std::string			_constructor;
 		public:
-			explicit mini_test(std::string name, bool (*f)(std::vector<T> *, ft::vector<T> *), ft::vector<T> *ft_vec, std::vector<T> *std_vec, int c): _name(name)
+			explicit mini_test(std::string name,
+					bool (*f)(std::vector<T> *, ft::vector<T> *),
+					ft::vector<T> *ft_vec,
+					std::vector<T> *std_vec,
+					int c,
+					int size_of_vec,
+					T	arg_1,
+					T	arg_2) : _arg_1(arg_1), _arg_2(arg_2)
 			{
 				_typename = typeid(T).name();
+				_name = name;
+				if (c == def)
+					_constructor = "DEFAULT ";
+				if (c == fill)
+					_constructor = "FILL ";
+				if (c == fill_2)
+					_constructor = "FILL_WITH_2_ARGS ";
+				if (c == range)
+					_constructor = "RANGE ";
+				if (c == copy)
+					_constructor = "COPY ";
 				if (_typename.compare("PPc") == 0)
 					_typename = "char **";
 				if (_typename.compare("Pc") == 0)
@@ -55,11 +76,42 @@ namespace mini_test
 					_typename = "char";
 				if (_typename.compare("d") == 0)
 					_typename = "double";
+					std::cout << YELLOW
+					<< 	_constructor
+					<< BOLDWHITE
+					<< "ft::vector" 
+					<< BOLDMAGENTA 
+					<< "<"
+					<< MAGENTA 
+					<< _typename 
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE
+					<< "("
+					<< ft_vec->size()
+					<< ")."
+					<< _name 
+					<< RESET
+					<< " == " 
+					<< BOLDWHITE
+					<< "std::vector"
+					<< BOLDMAGENTA 
+					<< "<"
+					<< MAGENTA 
+					<< _typename 
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE
+					<< "("
+					<< size_of_vec
+					<< ")."
+					<< _name 
+					<< RESET;
 				if (f(std_vec, ft_vec))
 				{
 					g_passed++;
 #ifndef LEAKS
-					std::cout << GREEN << "[PASSED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << _typename << BOLDMAGENTA << ">" << BOLDWHITE << "(" << ft_vec->size() << ")." << _name  << RESET << std::endl;
+					std::cout << GREEN << "[PASSED] "<< std::endl;
 #endif
 				}
 
@@ -67,13 +119,50 @@ namespace mini_test
 				{
 					g_failed++;
 #ifndef LEAKS
-					std::cout << RED <<  "[FAILED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << _typename << BOLDMAGENTA << ">" << BOLDWHITE << "(" << ft_vec->size() << ")." << _name  << RESET << std::endl;
+					std::cout << RED
+						<<  "[FAILED] "
+						<< BOLDWHITE
+						<< "ft::vector"
+						<< BOLDMAGENTA
+						<< "<"
+						<< MAGENTA
+						<< _typename
+						<< BOLDMAGENTA
+						<< ">"
+						<< BOLDWHITE
+						<< "("
+						<< ft_vec->size()
+						<< ")."
+						<< _name 
+						<< RESET
+						<< std::endl;
 #endif
 				}
 			}
-			explicit mini_test(std::string name, bool (*f)(ft::vector<T> *, ft::vector<T> *), ft::vector<T> *ft_vec, ft::vector<T> *std_vec, int c): _name(name)
+			/*
+			 *	ft::vector<int>(1, 2).begin() == std::vector<int>(1, 2).begin()
+			 */
+			explicit mini_test(std::string name,
+					bool (*f)(ft::vector<T> *, ft::vector<T> *),
+					ft::vector<T> *ft_vec,
+					ft::vector<T> *ft_vec_2,
+					int c,
+					int size_of_vec,
+					T	arg_1,
+					T	arg_2) : _arg_1(arg_1), _arg_2(arg_2)
 			{
 				_typename = typeid(T).name();
+				_name = name;
+				if (c == def)
+					_constructor = "DEFAULT ";
+				if (c == fill)
+					_constructor = "FILL ";
+				if (c == fill_2)
+					_constructor = "FILL_WITH_2_ARGS ";
+				if (c == range)
+					_constructor = "RANGE";
+				if (c == copy)
+					_constructor = "COPY";
 				if (_typename.compare("PPc") == 0)
 					_typename = "char **";
 				if (_typename.compare("Pc") == 0)
@@ -88,11 +177,26 @@ namespace mini_test
 					_typename = "char";
 				if (_typename.compare("d") == 0)
 					_typename = "double";
-				if (f(std_vec, ft_vec))
+				if (f(ft_vec_2, ft_vec))
 				{
 					g_passed++;
 #ifndef LEAKS
-					std::cout << GREEN << "[PASSED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << _typename << BOLDMAGENTA << ">" << BOLDWHITE << "(" << ft_vec->size() << ")." << _name  << RESET << std::endl;
+					std::cout << GREEN << "[PASSED] "
+						<< BOLDWHITE
+						<< "ft::vector" 
+						<< BOLDMAGENTA 
+						<< "<"
+						<< MAGENTA 
+						<< _typename 
+						<< BOLDMAGENTA
+						<< ">"
+						<< BOLDWHITE
+						<< "("
+						<< ft_vec->size()
+						<< ")."
+						<< _name 
+						<< RESET
+						<< std::endl;
 #endif
 				}
 
@@ -100,7 +204,23 @@ namespace mini_test
 				{
 					g_failed++;
 #ifndef LEAKS
-					std::cout << RED <<  "[FAILED] " << BOLDWHITE << "ft::vector" << BOLDMAGENTA << "<" << MAGENTA << _typename << BOLDMAGENTA << ">" << BOLDWHITE << "(" << ft_vec->size() << ")." << _name  << RESET << std::endl;
+					std::cout << RED
+						<<  "[FAILED] "
+						<< BOLDWHITE
+						<< "ft::vector"
+						<< BOLDMAGENTA
+						<< "<"
+						<< MAGENTA
+						<< _typename
+						<< BOLDMAGENTA
+						<< ">"
+						<< BOLDWHITE
+						<< "("
+						<< ft_vec->size()
+						<< ")."
+						<< _name 
+						<< RESET
+						<< std::endl;
 #endif
 				}
 			}
