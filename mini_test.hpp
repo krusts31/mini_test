@@ -5,7 +5,7 @@
 # include <iostream>
 # include <string>
 # include <csignal>
-# include "vector.hpp"
+//# include "vector.hpp"
 # include "color.hpp"
 
 namespace mini_test
@@ -13,8 +13,8 @@ namespace mini_test
 	size_t	g_passed = 0;
 	size_t	g_failed = 0;
 
-
-    String list[] = {
+	enum constructor{def, fill, fill_2, range, copy};
+	std::string list[] = {
             "DEFAULT ",
             "FILL ",
             "FILL_WITH_2_ARGS ",
@@ -22,7 +22,7 @@ namespace mini_test
             "COPY"
     };
 
-    String list1[][] = {
+	std::string list1[7][2] = {
             {"PPc", "char **"},
             {"Pc", "char **"},
             {"i", "int"},
@@ -52,6 +52,160 @@ namespace mini_test
 			int 				_size_of_vec;
 			std::string			_constructor;
 		public:
+			void	inti_vars(void)
+			{
+                for (int i = 0; i < sizeof(list) / sizeof(list[0]); i++)
+                {
+                    if (_c == i)
+                    {
+                        _constructor = list[i];
+                        break ;
+                    }
+                }
+
+                for (int i = 0; i < 7; i++)
+                {
+                    if (_typename.compare(list1[i][i]))
+                    {
+                        _typename = list1[i][1];
+                        break ;
+                    }
+                }
+			}
+			void	std_print_ok(void)
+			{
+#ifndef LEAKS
+				std::cout << GREEN << "[OK] "
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name
+					<< RESET
+					<< " == "
+					<< BOLDWHITE
+					<< "std::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+					get_constructor();
+					std::cout << _name
+					<< RESET << std::endl;
+#endif
+			}
+			void	std_print_ko(void)
+			{
+#ifndef LEAKS
+				std::cout << RED << "[KO] "
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name
+					<< RESET
+					<< " == "
+					<< BOLDWHITE
+					<< "std::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+					get_constructor();
+					std::cout << _name
+					<< RESET << std::endl;
+#endif
+			}
+			void	ft_print_ok(void)
+			{
+#ifndef LEAKS
+				std::cout << GREEN << "[OK] "
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name
+					<< RESET
+					<< " == "
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+					get_constructor();
+					std::cout << _name
+					<< RESET << std::endl;
+#endif
+			}
+			void	ft_print_ko(void)
+			{
+#ifndef LEAKS
+				std::cout << RED << "[KO] "
+					<< BOLDWHITE
+					<< "ft::vector" 
+					<< BOLDMAGENTA 
+					<< "<"
+					<< MAGENTA 
+					<< _typename 
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name 
+					<< RESET
+					<< " == " 
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA 
+					<< "<"
+					<< MAGENTA 
+					<< _typename 
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name 
+					<< RESET << std::endl;
+#endif
+			}
 			void	get_constructor(void)
 			{
 				if (_c == def)
@@ -70,137 +224,27 @@ namespace mini_test
 				if (_c == copy)
 					std::cout << "coming sooon";
 			}
-			explicit mini_test(std::string name,
+			explicit mini_test(
+					std::string name,
 					bool (*f)(std::vector<T> *, ft::vector<T> *),
 					ft::vector<T> *ft_vec,
 					std::vector<T> *std_vec,
 					int c,
 					int size_of_vec,
 					T	arg_1,
-					T	arg_2)
+					T	arg_2): _name(name), _c(c), _size_of_vec(size_of_vec), _arg_1(arg_1), _arg_2(arg_2)
 			{
-				_arg_1 = arg_1;
-				_arg_2 = arg_2;
-				_name = name;
-				_c = c;
-				_size_of_vec = size_of_vec;
+				inti_vars();
 				signal(SIGSEGV, signalHandler);
-                for (int i = 0; i < sizeof(list) / sizeof(list[0]); i++)
-                {
-                    if (c == i)
-                    {
-                        _constructor = list[i];
-                        break ;
-                    }
-                }
-
-                for (int i = 0; i < 7; i++)
-                {
-                    if (_typename.compare(list1[i][i]))
-                    {
-                        _typename = list1[i][1];
-                        break ;
-                    }
-                }
-					std::cout << YELLOW
-					<< 	_constructor
-					<< BOLDWHITE
-					<< "ft::vector" 
-					<< BOLDMAGENTA 
-					<< "<"
-					<< MAGENTA 
-					<< _typename 
-					<< BOLDMAGENTA
-					<< ">"
-					<< BOLDWHITE
-					<< "("
-					<< ft_vec->size()
-					<< ")."
-					<< _name 
-					<< RESET
-					<< " == " 
-					<< BOLDWHITE
-					<< "std::vector"
-					<< BOLDMAGENTA 
-					<< "<"
-					<< MAGENTA 
-					<< _typename 
-					<< BOLDMAGENTA
-					<< ">"
-					<< BOLDWHITE
-					<< "("
-					<< size_of_vec
-					<< ")."
-					<< _name 
-					<< RESET;
-
 				if (f(std_vec, ft_vec))
 				{
+					std_print_ok();
 					g_passed++;
-          #ifndef LEAKS
-				std::cout << GREEN << "[PASSED] " << RESET
-				BOLDWHITE
-				<< "ft::vector" 
-				<< BOLDMAGENTA 
-				<< "<"
-				<< MAGENTA 
-				<< _typename 
-				<< BOLDMAGENTA
-				<< ">"
-				<< BOLDWHITE;
-
-				get_constructor();
-
-				std::cout << _name 
-				<< RESET
-				<< " == " 
-				<< BOLDWHITE
-				<< "std::vector"
-				<< BOLDMAGENTA 
-				<< "<"
-				<< MAGENTA 
-				<< _typename 
-				<< BOLDMAGENTA
-				<< ">"
-				<< BOLDWHITE;
-				get_constructor();
-				std::cout << _name 
-				<< RESET << std::endl;
-#endif
 				}
 				else
 				{
+					std_print_ko();
 					g_failed++;
-#ifndef LEAKS
-				std::cout << RED << "[FAILED] " << RESET
-				<< BOLDWHITE
-				<< "ft::vector" 
-				<< BOLDMAGENTA 
-				<< "<"
-				<< MAGENTA 
-				<< _typename 
-				<< BOLDMAGENTA
-				<< ">"
-				<< BOLDWHITE;
-
-				get_constructor();
-
-				std::cout << _name 
-				<< RESET
-				<< " == " 
-				<< BOLDWHITE
-				<< "std::vector"
-				<< BOLDMAGENTA 
-				<< "<"
-				<< MAGENTA 
-				<< _typename 
-				<< BOLDMAGENTA
-				<< ">"
-				<< BOLDWHITE;
-				get_constructor();
-				std::cout << _name 
-				<< RESET << std::endl;
-#endif
 				}
 			}
 
@@ -211,116 +255,21 @@ namespace mini_test
 					int c,
 					int size_of_vec,
 					T	arg_1,
-					T	arg_2) : _arg_1(arg_1), _arg_2(arg_2)
+					T	arg_2): _name(name), _c(c), _size_of_vec(size_of_vec), _arg_1(arg_1), _arg_2(arg_2)
 			{
+				inti_vars();
 				signal(SIGSEGV, signalHandler);
-				_typename = typeid(T).name();
-				_name = name;
-
-
-                for (int i = 0; i < sizeof(list) / sizeof(list[0]); i++)
-                {
-                    if (c == i)
-                    {
-                        _constructor = list[i];
-                        break ;
-                    }
-                }
-
-                for (int i = 0; i < 7; i++)
-                {
-                    if (_typename.compare(list1[i][i]))
-                    {
-                        _typename = list1[i][1];
-                        break ;
-                    }
-                }
-
-				_size_of_vec = size_of_vec;
-				_c = c;
-
-				if (f(ft_vec_2, ft_vec))
+				if (f(ft_vec, ft_vec_2))
 				{
+					ft_print_ok();
 					g_passed++;
-#ifndef LEAKS
-					std::cout << GREEN << "[PASSED] " << RESET
-					BOLDWHITE
-					<< "ft::vector" 
-					<< BOLDMAGENTA 
-					<< "<"
-					<< MAGENTA 
-					<< _typename 
-					<< BOLDMAGENTA
-					<< ">"
-					<< BOLDWHITE;
-
-					get_constructor();
-
-					std::cout << _name 
-					<< RESET
-					<< " == " 
-					<< BOLDWHITE
-					<< "ft::vector"
-					<< BOLDMAGENTA 
-					<< "<"
-					<< MAGENTA 
-					<< _typename 
-					<< BOLDMAGENTA
-					<< ">"
-					<< BOLDWHITE;
-					get_constructor();
-					std::cout << _name 
-					<< RESET << std::endl;
-#endif
 				}
 				else
 				{
+					ft_print_ko();
 					g_failed++;
-#ifndef LEAKS
-					std::cout << RED << "[FAILED] " << RESET
-					<< BOLDWHITE
-					<< "ft::vector" 
-					<< BOLDMAGENTA 
-					<< "<"
-					<< MAGENTA 
-					<< _typename 
-					<< BOLDMAGENTA
-					<< ">"
-					<< BOLDWHITE;
-
-					get_constructor();
-
-					std::cout << _name 
-					<< RESET
-					<< " == " 
-					<< BOLDWHITE
-					<< "std::vector"
-					<< BOLDMAGENTA 
-					<< "<"
-					<< MAGENTA 
-					<< _typename 
-					<< BOLDMAGENTA
-					<< ">"
-					<< BOLDWHITE;
-					get_constructor();
-					std::cout << _name
-					<< RESET
-					<< " == " 
-					<< BOLDWHITE
-					<< "ft::vector"
-					<< BOLDMAGENTA 
-					<< "<"
-					<< MAGENTA 
-					<< _typename 
-					<< BOLDMAGENTA
-					<< ">"
-					<< BOLDWHITE;
-					get_constructor();
-					std::cout << _name 
-					<< RESET << std::endl;
+				}
 			}
-#endif
-		}
 	};
 }
 #endif
