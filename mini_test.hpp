@@ -31,6 +31,13 @@ namespace mini_test
 	size_t	g_passed = 0;
 	size_t	g_failed = 0;
 
+	void signalHandler(int signum)
+	{
+		(void)signum;
+		std::cout << CYAN << "[SEGFAULT] " << RESET << std::endl;
+		exit(1);
+	}
+
 	template <class T>
 	class mini_test
 	{
@@ -66,6 +73,7 @@ namespace mini_test
 					T	arg_1,
 					T	arg_2) : _arg_1(arg_1), _arg_2(arg_2)
 			{
+				signal(SIGSEGV, signalHandler);
 				_typename = typeid(T).name();
 				_name = name;
 				_size_of_vec = size_of_vec;
@@ -84,62 +92,72 @@ namespace mini_test
 					_typename = "char";
 				if (_typename.compare("d") == 0)
 					_typename = "double";
-					std::cout << BOLDWHITE
-					<< "ft::vector" 
-					<< BOLDMAGENTA 
-					<< "<"
-					<< MAGENTA 
-					<< _typename 
-					<< BOLDMAGENTA
-					<< ">"
-					<< BOLDWHITE;
-
-					get_constructor();
-
-					std::cout << _name 
-					<< RESET
-					<< " == " 
-					<< BOLDWHITE
-					<< "std::vector"
-					<< BOLDMAGENTA 
-					<< "<"
-					<< MAGENTA 
-					<< _typename 
-					<< BOLDMAGENTA
-					<< ">"
-					<< BOLDWHITE;
-					get_constructor();
-					std::cout << _name 
-					<< RESET;
 				if (f(std_vec, ft_vec))
 				{
 					g_passed++;
 #ifndef LEAKS
-					std::cout << GREEN << "[PASSED] "<< std::endl;
+				std::cout << GREEN << "[PASSED] " << RESET
+				BOLDWHITE
+				<< "ft::vector" 
+				<< BOLDMAGENTA 
+				<< "<"
+				<< MAGENTA 
+				<< _typename 
+				<< BOLDMAGENTA
+				<< ">"
+				<< BOLDWHITE;
+
+				get_constructor();
+
+				std::cout << _name 
+				<< RESET
+				<< " == " 
+				<< BOLDWHITE
+				<< "std::vector"
+				<< BOLDMAGENTA 
+				<< "<"
+				<< MAGENTA 
+				<< _typename 
+				<< BOLDMAGENTA
+				<< ">"
+				<< BOLDWHITE;
+				get_constructor();
+				std::cout << _name 
+				<< RESET << std::endl;
 #endif
 				}
-
 				else
 				{
 					g_failed++;
 #ifndef LEAKS
-					std::cout << RED
-						<<  "[FAILED] "
-						<< BOLDWHITE
-						<< "ft::vector"
-						<< BOLDMAGENTA
-						<< "<"
-						<< MAGENTA
-						<< _typename
-						<< BOLDMAGENTA
-						<< ">"
-						<< BOLDWHITE
-						<< "("
-						<< size_of_vec
-						<< ")."
-						<< _name 
-						<< RESET
-						<< std::endl;
+				std::cout << RED << "[FAILED] " << RESET
+				<< BOLDWHITE
+				<< "ft::vector" 
+				<< BOLDMAGENTA 
+				<< "<"
+				<< MAGENTA 
+				<< _typename 
+				<< BOLDMAGENTA
+				<< ">"
+				<< BOLDWHITE;
+
+				get_constructor();
+
+				std::cout << _name 
+				<< RESET
+				<< " == " 
+				<< BOLDWHITE
+				<< "std::vector"
+				<< BOLDMAGENTA 
+				<< "<"
+				<< MAGENTA 
+				<< _typename 
+				<< BOLDMAGENTA
+				<< ">"
+				<< BOLDWHITE;
+				get_constructor();
+				std::cout << _name 
+				<< RESET << std::endl;
 #endif
 				}
 			}
@@ -155,8 +173,11 @@ namespace mini_test
 					T	arg_1,
 					T	arg_2) : _arg_1(arg_1), _arg_2(arg_2)
 			{
+				signal(SIGSEGV, signalHandler);
 				_typename = typeid(T).name();
 				_name = name;
+				_size_of_vec = size_of_vec;
+				_c = c;
 				if (c == def)
 					_constructor = "DEFAULT ";
 				if (c == fill)
@@ -185,50 +206,84 @@ namespace mini_test
 				{
 					g_passed++;
 #ifndef LEAKS
-					std::cout << GREEN << "[PASSED] "
-						<< BOLDWHITE
-						<< "ft::vector" 
-						<< BOLDMAGENTA 
-						<< "<"
-						<< MAGENTA 
-						<< _typename 
-						<< BOLDMAGENTA
-						<< ">"
-						<< BOLDWHITE
-						<< "("
-						<< size_of_vec
-						<< ")."
-						<< _name 
-						<< RESET
-						<< std::endl;
+					std::cout << GREEN << "[PASSED] " << RESET
+					BOLDWHITE
+					<< "ft::vector" 
+					<< BOLDMAGENTA 
+					<< "<"
+					<< MAGENTA 
+					<< _typename 
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name 
+					<< RESET
+					<< " == " 
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA 
+					<< "<"
+					<< MAGENTA 
+					<< _typename 
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+					get_constructor();
+					std::cout << _name 
+					<< RESET << std::endl;
 #endif
 				}
-
 				else
 				{
 					g_failed++;
 #ifndef LEAKS
-					std::cout << RED
-						<<  "[FAILED] "
-						<< BOLDWHITE
-						<< "ft::vector"
-						<< BOLDMAGENTA
-						<< "<"
-						<< MAGENTA
-						<< _typename
-						<< BOLDMAGENTA
-						<< ">"
-						<< BOLDWHITE
-						<< "("
-						<< size_of_vec
-						<< ")."
-						<< _name 
-						<< RESET
-						<< std::endl;
-#endif
-				}
+					std::cout << RED << "[FAILED] " << RESET
+					<< BOLDWHITE
+					<< "ft::vector" 
+					<< BOLDMAGENTA 
+					<< "<"
+					<< MAGENTA 
+					<< _typename 
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name 
+					<< RESET
+					<< " == " 
+					<< BOLDWHITE
+					<< "std::vector"
+					<< BOLDMAGENTA 
+					<< "<"
+					<< MAGENTA 
+					<< _typename 
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+					get_constructor();
+					std::cout << _name
+					<< RESET
+					<< " == " 
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA 
+					<< "<"
+					<< MAGENTA 
+					<< _typename 
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+					get_constructor();
+					std::cout << _name 
+					<< RESET << std::endl;
 			}
+#endif
+		}
 	};
 }
-
 #endif
