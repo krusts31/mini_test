@@ -46,17 +46,21 @@ namespace mini_test
 			T					_arg_2;
 			std::string			_name;
 			std::string			_typename;
-			std::string			_constructor;
 			int 				_c;
 			int 				_size_of_vec;
+			std::string			_constructor;
 		public:
 			void	get_constructor(void)
 			{
+				if (_c == def)
+					std::cout << "().";
 				if (_c == fill)
 					std::cout << "(" << _size_of_vec << ").";
 				if (_c == fill_2)
 				{
-					if (_typename.compare("char *") != 0)
+					if (_typename.compare("char *") == 0)
+						std::cout << "(" << _size_of_vec << ", \"\").";
+					else
 						std::cout << "(" << _size_of_vec << ", " << _arg_2 << ").";
 				}
 				if (_c == range)
@@ -71,13 +75,15 @@ namespace mini_test
 					int c,
 					int size_of_vec,
 					T	arg_1,
-					T	arg_2) : _arg_1(arg_1), _arg_2(arg_2)
+					T	arg_2)
 			{
-				signal(SIGSEGV, signalHandler);
-				_typename = typeid(T).name();
+				_arg_1 = arg_1;
+				_arg_2 = arg_2;
 				_name = name;
-				_size_of_vec = size_of_vec;
+				_typename = typeid(T).name();
 				_c = c;
+				_size_of_vec = size_of_vec;
+				signal(SIGSEGV, signalHandler);
 				if (_typename.compare("PPc") == 0)
 					_typename = "char **";
 				if (_typename.compare("Pc") == 0)
