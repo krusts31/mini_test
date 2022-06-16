@@ -24,7 +24,7 @@ namespace mini_test
 
 	std::string list1[7][2] = {
             {"PPc", "char **"},
-            {"Pc", "char **"},
+            {"Pc", "char *"},
             {"i", "int"},
             {"f", "float"},
             {"NSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE", "std::string"},
@@ -54,6 +54,7 @@ namespace mini_test
 		public:
 			void	inti_vars(void)
 			{
+				std::string name = typeid(T).name();
                 for (int i = 0; i < sizeof(list) / sizeof(list[0]); i++)
                 {
                     if (_c == i)
@@ -65,7 +66,7 @@ namespace mini_test
 
                 for (int i = 0; i < 7; i++)
                 {
-                    if (_typename.compare(list1[i][i]))
+                    if (name.compare(list1[i][0]) == 0)
                     {
                         _typename = list1[i][1];
                         break ;
