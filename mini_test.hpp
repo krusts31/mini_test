@@ -32,13 +32,26 @@ namespace mini_test
             {"d", "double"}
     };
 
-	void signalHandler(int signum)
-	{
-		(void)signum;
-		std::cout << CYAN << "[SEGFAULT] " << RESET << std::endl;
-		exit(1);
-	}
+			void signalHandler_1(int signum)
+			{
+				(void)signum;
+				std::cout << CYAN << "[SEGFAULT] " << RESET << std::endl;
+				exit(1);
+			}
 
+			void signalHandler_2(int signum)
+			{
+				(void)signum;
+				std::cout << CYAN << "[SEGFAULT] "<< RESET << std::endl;
+				exit(1);
+			}
+
+			void signalHandler_3(int signum)
+			{
+				(void)signum;
+				std::cout << CYAN << "[SEGFAULT] "<< RESET << std::endl;
+				exit(1);
+			}
 
 	template <class T>
 	class mini_test
@@ -51,7 +64,10 @@ namespace mini_test
 			int 				_c;
 			int 				_size_of_vec;
 			std::string			_constructor;
+			int 				_size;
+			T					_arg_3;
 		public:
+
 			void	inti_vars(void)
 			{
 				std::string name = typeid(T).name();
@@ -72,6 +88,138 @@ namespace mini_test
                         break ;
                     }
                 }
+			}
+			void	std_print_ok_arg(void)
+			{
+#ifndef LEAKS
+				std::cout << GREEN << "[OK] "
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name
+					<< RESET
+					<< " == "
+					<< BOLDWHITE
+					<< "std::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+					get_constructor();
+					std::cout << _name
+					<< RESET << std::endl;
+#endif
+			}
+			void	std_print_ko_arg(void)
+			{
+#ifndef LEAKS
+				std::cout << RED << "[KO] "
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name
+					<< RESET
+					<< " == "
+					<< BOLDWHITE
+					<< "std::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+					get_constructor();
+					std::cout << _name
+					<< RESET << std::endl;
+#endif
+			}
+			void	std_print_ok_resize(void)
+			{
+#ifndef LEAKS
+				std::cout << GREEN << "[OK] "
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name
+					<< RESET
+					<< " == "
+					<< BOLDWHITE
+					<< "std::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+					get_constructor();
+					std::cout << _name
+					<< RESET << std::endl;
+#endif
+			}
+			void	std_print_ko_resize(void)
+			{
+#ifndef LEAKS
+				std::cout << RED << "[KO] "
+					<< BOLDWHITE
+					<< "ft::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+
+					get_constructor();
+
+					std::cout << _name
+					<< RESET
+					<< " == "
+					<< BOLDWHITE
+					<< "std::vector"
+					<< BOLDMAGENTA
+					<< "<"
+					<< MAGENTA
+					<< _typename
+					<< BOLDMAGENTA
+					<< ">"
+					<< BOLDWHITE;
+					get_constructor();
+					std::cout << _name
+					<< RESET << std::endl;
+#endif
 			}
 			void	std_print_ok(void)
 			{
@@ -236,7 +384,7 @@ namespace mini_test
 					T	arg_2): _name(name), _c(c), _size_of_vec(size_of_vec), _arg_1(arg_1), _arg_2(arg_2)
 			{
 				inti_vars();
-				signal(SIGSEGV, signalHandler);
+				//signal(SIGSEGV, signalHandler_1);
 				if (f(std_vec, ft_vec))
 				{
 					std_print_ok();
@@ -259,7 +407,7 @@ namespace mini_test
 					T	arg_2): _name(name), _c(c), _size_of_vec(size_of_vec), _arg_1(arg_1), _arg_2(arg_2)
 			{
 				inti_vars();
-				signal(SIGSEGV, signalHandler);
+//				signal(SIGSEGV, signalHandler_2);
 				if (f(ft_vec, ft_vec_2))
 				{
 					ft_print_ok();
@@ -268,6 +416,55 @@ namespace mini_test
 				else
 				{
 					ft_print_ko();
+					g_failed++;
+				}
+			}
+			explicit mini_test(
+					std::string name,
+					bool (*f)(std::vector<T> *, ft::vector<T> *, unsigned int, T),
+					ft::vector<T> *ft_vec,
+					std::vector<T> *std_vec,
+					int c,
+					int size_of_vec,
+					T	arg_1,
+					T	arg_2,
+					unsigned int size,
+					T	arg_3): _name(name), _c(c), _size_of_vec(size_of_vec), _arg_1(arg_1), _arg_2(arg_2), _size(size), _arg_3(arg_3)
+			{
+				inti_vars();
+				//signal(SIGSEGV, signalHandler_3);
+				if (f(std_vec, ft_vec, size, arg_3))
+				{
+					std_print_ok_resize();
+					g_passed++;
+				}
+				else
+				{
+					std_print_ko_resize();
+					g_failed++;
+				}
+			}
+			explicit mini_test(
+					std::string name,
+					bool (*f)(std::vector<T> *, ft::vector<T> *, unsigned int),
+					ft::vector<T> *ft_vec,
+					std::vector<T> *std_vec,
+					int c,
+					int size_of_vec,
+					T	arg_1,
+					T	arg_2,
+					unsigned int size): _name(name), _c(c), _size_of_vec(size_of_vec), _arg_1(arg_1), _arg_2(arg_2), _size(size)
+			{
+				inti_vars();
+				//signal(SIGSEGV, signalHandler_3);
+				if (f(std_vec, ft_vec, size))
+				{
+					std_print_ok_arg();
+					g_passed++;
+				}
+				else
+				{
+					std_print_ko_arg();
 					g_failed++;
 				}
 			}
